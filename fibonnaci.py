@@ -25,9 +25,20 @@ def generate_fibonnaci(limit):
 		fsequence.append(next_fnumber)
 	return fsequence
 
+def write_fibonnaci_to_file(fsequence, filename):
+	try:
+		with open(filename, 'w') as f:
+			for number in fsequence:
+				f.write(f"{number}\n")
+		print(f"Fibonacci sequence successfully written to {filename}")
+	except IOError as e:
+		print(f"Error writing to file: {e}")
+
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description = "Generate the Fibonnaci numbers less than a limit.")
 	parser.add_argument('limit', type=int, help='Upper limit for the Fibonacci numbers')
+	parser.add_argument('filename', type=str, help='Output file name')
 	args = parser.parse_args()
 	fsequence = generate_fibonnaci(args.limit)
 	print("The Fibonnaci numbers less than", args.limit, "are:", fsequence)
+	write_fibonnaci_to_file(fsequence, args.filename)
